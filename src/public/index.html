@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jan Aushadhi Generic Medicine Finder - Save 50-80%</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💊</text></svg>">
+</head>
+<body>
+
+  <!-- Mandatory Safety Alert Banner -->
+  <div class="safety-banner">
+    <span>⚠️</span>
+    <span><strong>Safety Notice:</strong> Confirm with your doctor or pharmacist before switching. Exact salt and strength match only.</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-content">
+      <div class="logo-area">
+        <div class="logo-badge">💊</div>
+        <div>
+          <div class="brand-title">Jan Aushadhi Generic Finder</div>
+          <div class="brand-sub">जन औषधि जेनेरिक दवा खोजक · Verified Bio-Equivalence</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status-chip" id="engine-status-chip">
+          <span class="status-dot" id="mode-badge"></span>
+          <span id="engine-mode-status">Verified Hybrid Mode</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-settings">⚙️ SerpApi Key</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero & Search Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Stop Overpaying for <span>Branded Medicines</span></h1>
+      <p class="hero-subtitle">
+        Find bio-equivalent generic salts for 50% to 80% less. Powered by Google Lens, Search, Shopping, and Maps via SerpApi.
+      </p>
+
+      <div class="search-box-wrapper">
+        <form id="search-form" class="search-input-group">
+          <input type="text" id="search-input" placeholder="Enter branded medicine (e.g., Augmentin 625 Duo, Glycomet 500, Telma 40)..." autocomplete="off" value="Augmentin 625 Duo">
+          <button type="submit" class="btn btn-primary" id="btn-search">🔍 Search Salt</button>
+          <button type="button" class="btn btn-outline-primary" id="btn-upload-strip" title="Upload Medicine Blister Strip Photo">📷 Upload Strip</button>
+          <button type="button" class="btn btn-secondary" id="btn-webcam" title="Take Webcam Snapshot">📸 Scan Camera</button>
+          <input type="file" id="strip-upload-input" accept="image/*" class="hidden">
+        </form>
+      </div>
+
+      <!-- Quick Sample Strips & Medicines -->
+      <div class="quick-pills">
+        <span>Popular chronic medicines:</span>
+        <button class="pill quick-med-pill" data-med="Augmentin 625 Duo">Augmentin 625</button>
+        <button class="pill quick-med-pill" data-med="Glycomet 500">Glycomet 500 (Diabetes)</button>
+        <button class="pill quick-med-pill" data-med="Telma 40">Telma 40 (BP)</button>
+        <button class="pill quick-med-pill" data-med="Thyronorm 50 mcg">Thyronorm 50 (Thyroid)</button>
+        <button class="pill quick-med-pill" data-med="Pan 40">Pan 40 (Acidity)</button>
+        <button class="pill quick-med-pill" data-med="Rosuvas 10">Rosuvas 10 (Cholesterol)</button>
+      </div>
+
+      <div class="quick-pills" style="margin-top: 0.5rem;">
+        <span>Or test Google Lens on sample strips:</span>
+        <button class="pill sample-strip-pill" data-sample-id="sample-augmentin" data-medicine="Augmentin 625 Duo">🧪 Augmentin Strip</button>
+        <button class="pill sample-strip-pill" data-sample-id="sample-glycomet" data-medicine="Glycomet 500">🧪 Glycomet Strip</button>
+        <button class="pill sample-strip-pill" data-sample-id="sample-telma" data-medicine="Telma 40">🧪 Telma Strip</button>
+        <button class="pill sample-strip-pill" data-sample-id="sample-thyronorm" data-medicine="Thyronorm 50 mcg">🧪 Thyronorm Bottle</button>
+        <button class="pill sample-strip-pill" data-sample-id="sample-pan" data-medicine="Pan 40">🧪 Pan 40 Strip</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Indicator -->
+  <div id="loading-indicator" class="container hidden" style="text-align: center; padding: 2rem 0;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏳</div>
+    <div id="loading-text" style="font-weight: 600; color: #0284c7;">Analyzing medicine details...</div>
+  </div>
+
+  <!-- Results Section -->
+  <main class="container main-grid" id="result-section">
+
+    <!-- Active Salt & Safety Verification Card -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div style="font-size: 0.8rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.05em;">Chemical Salt & Strength Composition (Google Search)</div>
+          <h2 id="display-brand-name" style="font-size: 1.75rem; font-weight: 900; color: #0f172a; margin-top: 0.2rem;">Augmentin 625 Duo</h2>
+          <div id="display-salt-comp" style="font-size: 1.15rem; font-weight: 700; color: #0284c7; margin-top: 0.25rem;">Amoxicillin (500mg) + Clavulanic Acid (125mg)</div>
+          <div id="display-mfg" style="font-size: 0.85rem; color: #64748b; margin-top: 0.25rem;">Manufacturer: GlaxoSmithKline Pharmaceuticals Ltd</div>
+        </div>
+
+        <!-- Bio-Equivalence Badge -->
+        <div id="safety-status-badge" class="safety-seal">
+          <div class="safety-seal-icon">✓</div>
+          <div>
+            <strong style="color: #166534;">100% Bio-Equivalent Chemical Match</strong>
+            <div style="font-size: 0.8rem; color: #15803d;">Exact active salt and dosage validated.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discrepancy Alert Box -->
+      <div id="discrepancy-alerts" class="hidden"></div>
+
+      <!-- Spotlight Price Comparison -->
+      <div class="comparison-spotlight">
+        <!-- Branded Card -->
+        <div class="med-card branded">
+          <span class="med-badge">Branded Version</span>
+          <div class="med-title">Prescribed Brand</div>
+          <div class="med-salt">Commercial Pharmacy MRP</div>
+          <div class="price-display">
+            <span class="price-main" id="branded-mrp">₹204.50</span>
+            <span class="price-unit" id="branded-unit">(₹20.45 / tablet)</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;" id="branded-source">
+            Source: Tata 1mg · Verified Timestamp
+          </div>
+        </div>
+
+        <!-- Generic Card -->
+        <div class="med-card generic">
+          <span class="med-badge">Jan Aushadhi Generic</span>
+          <div class="med-title" id="generic-product-name">Amoxycillin & Potassium Clavulanate IP 625mg</div>
+          <div class="med-salt">Same active salts, tested purity & bio-availability</div>
+          <div class="price-display">
+            <span class="price-main" id="generic-price">₹58.00</span>
+            <span class="price-unit" id="generic-unit">(₹5.80 / tablet)</span>
+            <span class="discount-badge" id="generic-discount">71.6% LESS</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #166534; font-weight: 600; margin-top: 0.5rem;">
+            ✓ Govt PMBJP Certified Generic · Available at Jan Aushadhi Kendras
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multi-Store Price Comparison (Google Shopping & Immersive Product API) -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800;">Generic Equivalents Across Pharmacies</h3>
+          <p style="font-size: 0.85rem; color: #64748b;">Live online pharmacy prices gathered via Google Shopping & Immersive Product API.</p>
+        </div>
+        <span style="font-size: 0.75rem; color: #64748b;">Source URL & Timestamp attached to each quote</span>
+      </div>
+
+      <div class="store-table-wrapper">
+        <table class="store-table">
+          <thead>
+            <tr>
+              <th>Pharmacy / Seller</th>
+              <th>Category</th>
+              <th>Generic Price (Pack)</th>
+              <th>Delivery / Stock</th>
+              <th>Verification & Link</th>
+            </tr>
+          </thead>
+          <tbody id="stores-table-body">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Monthly & Yearly Savings Calculator (Chronic Care) -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800;">Chronic Patient Prescription Savings Calculator</h3>
+          <p style="font-size: 0.85rem; color: #64748b;">See how switching to generic equivalents saves thousands of rupees every year.</p>
+        </div>
+      </div>
+
+      <!-- Chronic condition tabs -->
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+        <button class="btn btn-primary btn-sm chronic-tab" data-med="Glycomet 500" data-dose="2">🩺 Diabetes (2 tabs/day)</button>
+        <button class="btn btn-secondary btn-sm chronic-tab" data-med="Telma 40" data-dose="1">❤️ Blood Pressure (1 tab/day)</button>
+        <button class="btn btn-secondary btn-sm chronic-tab" data-med="Thyronorm 50 mcg" data-dose="1">🦋 Thyroid (1 tab/day)</button>
+        <button class="btn btn-secondary btn-sm chronic-tab" data-med="Rosuvas 10" data-dose="1">🩸 Cholesterol (1 tab/day)</button>
+        <button class="btn btn-secondary btn-sm chronic-tab" data-med="Pan 40" data-dose="1">🛡️ Acid Reflux (1 tab/day)</button>
+      </div>
+
+      <div class="calc-container">
+        <!-- Controls -->
+        <div class="calc-controls">
+          <div class="form-group">
+            <label for="dosage-slider">Daily Dosage Frequency</label>
+            <div class="range-wrap">
+              <input type="range" id="dosage-slider" min="0.5" max="4" step="0.5" value="1">
+              <span id="dosage-val" style="font-weight: 800; min-width: 100px; color: #0284c7;">1 tablet/day</span>
+            </div>
+            <span style="font-size: 0.75rem; color: #64748b;">Based on 30 days per month (360 tablets / year)</span>
+          </div>
+
+          <div style="background: #f1f5f9; padding: 1rem; border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.9rem;">
+              <span>Branded Monthly Cost:</span>
+              <strong id="calc-branded-monthly" style="color: #0f172a;">₹613.50</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+              <span>Generic Monthly Cost:</span>
+              <strong id="calc-generic-monthly" style="color: #16a34a;">₹174.00</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="calc-summary-card">
+          <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: #94a3b8; font-weight: 700;">Projected Prescription Savings</div>
+            <div class="savings-highlight">
+              <div class="savings-numbers">
+                <div>
+                  <div style="font-size: 0.75rem; color: #bbf7d0;">MONTHLY SAVINGS</div>
+                  <div class="savings-big" id="calc-monthly-savings">₹439.50</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 0.75rem; color: #bbf7d0;">YEARLY SAVINGS</div>
+                  <div class="savings-big" id="calc-yearly-savings">₹5,274.00</div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #cbd5e1;">
+              <strong>5-Year Cumulative Savings:</strong> <span id="calc-five-year-savings" style="color: #4ade80; font-weight: bold;">₹26,370.00</span>
+            </div>
+          </div>
+          <div class="real-world-impact" id="calc-impact-text">
+            Saves enough to fully sponsor an annual family health insurance (Arogya Sanjeevani) premium.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nearest Jan Aushadhi Kendra Locator & Directions (Google Maps & Directions API) -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800;">Nearest Jan Aushadhi Kendras & Pharmacies</h3>
+          <p style="font-size: 0.85rem; color: #64748b;">Locate official PMBJP outlets and get turn-by-turn directions via Google Maps API.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <select id="city-select" style="padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+            <option value="New Delhi">New Delhi</option>
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Pune">Pune</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" id="btn-geolocate">📍 Near Me</button>
+        </div>
+      </div>
+
+      <div class="kendra-layout">
+        <!-- List -->
+        <div class="kendra-list" id="kendra-list-container">
+          <!-- Populated by map.js -->
+        </div>
+
+        <!-- Route Directions View -->
+        <div id="directions-container" class="directions-box hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 800; font-size: 1rem; color: #0f172a;">🧭 Turn-by-Turn Navigation</div>
+            <span style="font-size: 0.75rem; color: #64748b;">Google Maps Directions API</span>
+          </div>
+          <div id="route-summary" style="font-size: 0.9rem; color: #334155; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;"></div>
+          <ol class="steps-list" id="route-steps-list"></ol>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Camera Modal -->
+  <div id="camera-modal" class="modal-overlay hidden">
+    <div class="modal-content" style="text-align: center;">
+      <h3 style="font-weight: 800; margin-bottom: 0.5rem;">📸 Photograph Medicine Strip</h3>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Position blister strip under camera so text and salt details are clearly visible.</p>
+      <video id="webcam-video" autoplay playsinline style="width: 100%; height: 260px; object-fit: cover; border-radius: 10px; background: #000; margin-bottom: 1rem;"></video>
+      <div style="display: flex; justify-content: center; gap: 0.75rem;">
+        <button class="btn btn-primary" id="btn-snap-photo">Capture & Scan</button>
+        <button class="btn btn-secondary" id="btn-close-camera">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings / SerpApi Key Modal -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 style="font-weight: 800; margin-bottom: 0.5rem;">⚙️ SerpApi Configuration</h3>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+        Enter your SerpApi API key to execute live queries across all 6 Google engines (Lens, Search, Shopping, Immersive Product, Maps, Directions). Leave blank to use verified offline mock mode.
+      </p>
+      <div class="form-group" style="margin-bottom: 1.25rem;">
+        <label for="api-key-input">SerpApi API Key</label>
+        <input type="password" id="api-key-input" placeholder="Enter private SerpApi key..." style="padding: 0.65rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px;">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+        <button class="btn btn-secondary btn-sm" id="btn-close-settings">Close</button>
+        <button class="btn btn-primary btn-sm" id="btn-save-key">Save & Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container notice-block">
+      <p><strong>Medical Disclaimer:</strong> This application identifies bio-equivalent generic medicines using strict active chemical salt and strength matching according to Indian Pharmacopoeia standards. Generic substitution must always be confirmed with your doctor or pharmacist before switching.</p>
+      <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #94a3b8;">
+        Integrated with SerpApi: Google Lens API · Google Search API · Google Shopping API · Google Immersive Product API · Google Maps API · Google Maps Directions API.
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
